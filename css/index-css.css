@@ -63,6 +63,11 @@ width: 100%;
   transform: scale(1.03);
   transition: all 0.3s;
 }
+.custom-alert{
+  position: fixed;
+  margin: 0 auto;
+  height: 1.7px;
+}
 @media screen and (max-width:575px) {
   .availability-form
 {

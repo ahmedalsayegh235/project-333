@@ -31,29 +31,70 @@
 
   <div class="col-lg-6 col-md-6 mb-5 px-4 mt-2">
     <div class="bg-white rounded shadow p-4">
-      <form>
+      <form method="POST">
         <h5>Send a message</h5>
         <div class="mt-3">
         <label class="form-label" style="font-weight:500;">Name</label>
-        <input type="text" class="form-control shadow-none">
+        <input name="name" required type="text" class="form-control shadow-none">
         </div>
 
         <div class="mt-3">
         <label class="form-label" style="font-weight:500;">E-mail</label>
-        <input type="text" class="form-control shadow-none">
+        <input type="email" name="email" required class="form-control shadow-none">
         </div>
 
         <div class="mt-3">
         <label class="form-label" style="font-weight:500;">Subject</label>
-        <input type="text" class="form-control shadow-none">
+        <input type="text" name="subject" required class="form-control shadow-none">
         </div>
 
         <div class="mt-3">
         <label class="form-label" style="font-weight:500;">Message</label>
-        <textarea class="form-control shadow-none" row="1" style="resize:none;"></textarea>
+        <textarea class="form-control shadow-none" name="message" row="1" style="resize:none;"></textarea>
         </div>
-        <button type="submit" class="btn text-white custom-bg mt-3">SEND</button>
+        <button type="submit" name="send" class="btn text-white custom-bg mt-3">SEND</button>
       </form>
+      <?php
+if (isset($_POST['send'])) {
+  // Sanitize and validate the input data
+  $frm_data = [
+      'name' => htmlspecialchars(trim($_POST['name'] ?? '')),
+      'email' => htmlspecialchars(trim($_POST['email'] ?? '')),
+      'subject' => htmlspecialchars(trim($_POST['subject'] ?? '')),
+      'message' => htmlspecialchars(trim($_POST['message'] ?? '')),
+  ];
+
+  // Check if any required field is empty
+  if (empty($frm_data['name']) || empty($frm_data['email']) || empty($frm_data['subject']) || empty($frm_data['message'])) {
+      alert('error', 'All fields are required.');
+      return;
+  }
+
+  // Ensure valid email format
+  if (!filter_var($frm_data['email'], FILTER_VALIDATE_EMAIL)) {
+      alert('error', 'Invalid email format.');
+      return;
+  }
+
+  // Prepare the query
+  $query = "INSERT INTO user_queries (`name`, `email`, `subject`, `message`) VALUES (?, ?, ?, ?)";
+  $values = [$frm_data['name'], $frm_data['email'], $frm_data['subject'], $frm_data['message']];
+
+  try {
+      $stmt = $pdo->prepare($query); // Use the PDO instance to prepare the query
+      $res = $stmt->execute($values); // Execute with bound values
+
+      if ($res) {
+          alert('success', 'Mail sent successfully!');
+      } else {
+          alert('error', 'Failed to send the mail. Please try again.');
+      }
+  } catch (PDOException $e) {
+      alert('error', 'Database error: ' . $e->getMessage());
+  }
+}
+
+?>
     </div>
   </div>
 </div>

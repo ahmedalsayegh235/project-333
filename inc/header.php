@@ -1,3 +1,7 @@
+ <?php require('admin/inc/db_config.php');
+ require('admin/inc/essentials.php');
+ ?>
+ 
  <!-- navbar -->
  <nav class="navbar navbar-expand-lg navbar-light px-lg-3 py-lg-2 shadow sticky-top">
     <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php"><i class="fas fa-door-open"></i>Roomy</a>
