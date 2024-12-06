@@ -31,9 +31,9 @@ if (isset($_GET['seen'])) {
             $res = $stmt->execute();
 
             if ($res) {
-                alert('success', 'All queries marked as read');
+                _alert('success', 'All queries marked as read');
             } else {
-                alert('error', 'Operation failed');
+                _alert('error', 'Operation failed');
             }
         } else {
             // Mark a specific row as read
@@ -43,19 +43,19 @@ if (isset($_GET['seen'])) {
             $res = $stmt->execute($values);
 
             if ($res) {
-                alert('success', 'Marked as read');
+                _alert('success', 'Marked as read');
             } else {
-                alert('error', 'Operation failed');
+                _alert('error', 'Operation failed');
             }
         }
     } catch (PDOException $e) {
         // Log the error and show a friendly message
         error_log("Database Error: " . $e->getMessage());
-        alert('error', 'A database error occurred. Please try again.');
+        _alert('error', 'A database error occurred. Please try again.');
     } catch (Exception $e) {
         // Handle other types of exceptions
         error_log("General Error: " . $e->getMessage());
-        alert('error', 'An unexpected error occurred. Please try again.');
+        _alert('error', 'An unexpected error occurred. Please try again.');
     }
 }
 if (isset($_GET['del'])) {
@@ -69,12 +69,12 @@ if (isset($_GET['del'])) {
             $res = $stmt->execute();
 
             if ($res) {
-                alert("success", "All data deleted!");
+                _alert("success", "All data deleted!");
             } else {
-                alert("error", "Operation failed!");
+                _alert("error", "Operation failed!");
             }
         } catch (PDOException $e) {
-            alert("error", "Database error: " . $e->getMessage());
+            _alert("error", "Database error: " . $e->getMessage());
         }
     } else {
         try {
@@ -85,12 +85,12 @@ if (isset($_GET['del'])) {
             $res = $stmt->execute($values);
 
             if ($res) {
-                alert("success", "Data deleted!");
+                _alert("success", "Data deleted!");
             } else {
-                alert("error", "Operation failed!");
+                _alert("error", "Operation failed!");
             }
         } catch (PDOException $e) {
-            alert("error", "Database error: " . $e->getMessage());
+            _alert("error", "Database error: " . $e->getMessage());
         }
     }
 }

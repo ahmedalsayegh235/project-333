@@ -66,13 +66,13 @@ if (isset($_POST['send'])) {
 
   // Check if any required field is empty
   if (empty($frm_data['name']) || empty($frm_data['email']) || empty($frm_data['subject']) || empty($frm_data['message'])) {
-      alert('error', 'All fields are required.');
+      _alert('error', 'All fields are required.');
       return;
   }
 
   // Ensure valid email format
   if (!filter_var($frm_data['email'], FILTER_VALIDATE_EMAIL)) {
-      alert('error', 'Invalid email format.');
+      _alert('error', 'Invalid email format.');
       return;
   }
 
@@ -85,12 +85,12 @@ if (isset($_POST['send'])) {
       $res = $stmt->execute($values); // Execute with bound values
 
       if ($res) {
-          alert('success', 'Mail sent successfully!');
+          _alert('success', 'Mail sent successfully!');
       } else {
-          alert('error', 'Failed to send the mail. Please try again.');
+          _alert('error', 'Failed to send the mail. Please try again.');
       }
   } catch (PDOException $e) {
-      alert('error', 'Database error: ' . $e->getMessage());
+      _alert('error', 'Database error: ' . $e->getMessage());
   }
 }
 
