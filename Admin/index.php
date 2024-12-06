@@ -10,12 +10,12 @@ if (isset($_POST['login'])) {
     // Sanitize input data
     $frm_data = filteration($_POST);
 
-    // Query syntax
+    // Query
     $query = "SELECT * FROM admin_cred WHERE admin_name = ? AND admin_pass = ?";
     $values = [$frm_data['admin_name'], $frm_data['admin_pass']];
 
     try {
-        // Prepare and execute the query
+        // Prepare and execute 
         $stmt = $pdo->prepare($query); 
         $stmt->execute($values);
 

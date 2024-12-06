@@ -56,13 +56,13 @@ if (isset($_POST['upd_shutdown'])) {
     // Sanitize and validate the input
     $frm_data = intval(filter_input(INPUT_POST, 'upd_shutdown', FILTER_SANITIZE_NUMBER_INT));
 
-    // Ensure the value is either 0 or 1
+    // make sure that the value is either 0 or 1
     if ($frm_data !== 0 && $frm_data !== 1) {
         echo json_encode(["success" => false, "message" => "Invalid value for shutdown."]);
         exit;
     }
 
-    // Correct query syntax
+    // query
     $query = "UPDATE settings SET `shutdown` = ? WHERE sr_no = ?";
     $values = [$frm_data, 1];
 

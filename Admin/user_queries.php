@@ -119,7 +119,7 @@ if (isset($_GET['del'])) {
                            $q = "SELECT * FROM user_queries ORDER BY sr_no DESC";
                            $stmt = $pdo->prepare($q);
                            
-                           // Execute the query
+                           // Execute
                            $stmt->execute();
                            
                            // Counter for the serial number
