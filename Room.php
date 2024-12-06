@@ -38,39 +38,47 @@
 
   <div class="col-lg-9 col-md-12 px-4">
 <?php
+try {
+  // Fetch only active rooms
+  $stmt = $pdo->prepare("SELECT * FROM rooms WHERE status = 1");
+  $stmt->execute();
+  $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
+  if ($rooms) {
+      foreach ($rooms as $room) {
+          echo "
+          <div class='card mb-4 border-0 shadow'>
+              <div class='row g-0 p-3 align-items-center'>
+                  <div class='col-md-5 mb-lg-0 mb-md-0 mb-3'>
+                      <img src='images/placeholder.png' class='img-fluid rounded pe-5' alt='Room Image'>
+                  </div>
+                  <div class='col-md-5 px-lg-3 px-md-3 px-0'>
+                      <h5 class='fw-bold'>{$room['name']}</h5>
+                      <div class='features mb-3'>
+                          <h6 class='mb-1'>Features</h6>
+                          <span class='badge badge-light custom-pill'>Intel i5 Computers</span>
+                          <span class='badge badge-light custom-pill'>20 Seats</span>
+                          <span class='badge badge-light custom-pill'>Smart Board</span>
+                      </div>
+                      <h6 class='mb-1'>Description</h6>
+                      <p>{$room['description']}</p>
+                  </div>
+                  <div class='col-md-2 text-center'>
+                      <h6 class='mb-4'>Per 1 Hour</h6>
+                      <a href='#' class='btn btn-sm w-100 text-white custom-bg shadow-none mb-2'>Book Now!</a>
+                      <a href='#' class='btn btn-sm w-100 btn-outline-dark shadow-none'>More Info</a>
+                  </div>
+              </div>
+          </div>";
+      }
+  } else {
+      echo "<p class='text-center'>No rooms available at the moment.</p>";
+  }
+} catch (Exception $e) {
+  echo "<p class='text-center text-danger'>Failed to load rooms. Please try again later.</p>";
+}
 ?>
 
-
-    <div class="card mb-4 border-0 shadow">
-      <div class="row g-0 p-3 align-text-center">
-        <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-          <img src="images/placeholder.png" class="img-fluid rounded pe-5">
-        </div>
-        <div class="col-md-5 px-lg-3 px-md-3 px-0">
-          <h5 class="">simple room name</h5>
-          <div class="features mb-3">
-        <h6 class="mb-1">Features</h6>
-        <span class="badge badge-light custom-pill">
-          20 intel i5 computers
-        </span>
-        <span class="badge badge-light custom-pill">
-          20 seats
-        </span>
-        <span class="badge badge-light custom-pill">
-          Smart board
-        </span>
-        </div>
-        </div>
-        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-align-center">
-          <h6 class="mb-4">per 1 hour</h6>
-          <a href="#" class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2 ">Book now!</a>
-          <a href="#" class="btn btn-sm w-100 btn-outline-dark shadow-none ">More info</a>
-  
-        </div>
-      </div>
-    </div>
    
   </div>
 

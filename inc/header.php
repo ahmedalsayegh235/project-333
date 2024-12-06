@@ -1,5 +1,6 @@
  <?php require('admin/inc/db_config.php');
  require('admin/inc/essentials.php');
+ 
  ?>
  
  <!-- navbar -->
@@ -71,7 +72,7 @@
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
-        <form>
+        <form id="register-form">
         <div class="modal-header">
           <h5 class="modal-title">
           <i class="bi bi-person-add fs-3 me-2"></i> User Signup
@@ -89,39 +90,39 @@
           <div class="row">
             <div class="col-md-6 ps-auto mb-3">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control shadow-none">
+            <input name="name" type="text" class="form-control shadow-none" required>
             </div>
             <div class="col-md-6 p-auto mb-3">
             <label class="form-label">Email</label>
-            <input type="email" class="form-control shadow-none">
+            <input name="email" type="email" class="form-control shadow-none" required>
             </div>
             <div class="col-md-6 ps-auto mb-3">
             <label class="form-label">Phone No.</label>
-            <input type="number" class="form-control shadow-none">
+            <input type="phonenum" name="phone" class="form-control shadow-none" required>
             </div>
             <div class="col-md-6 p-auto mb-3">
             <label class="form-label">Student ID</label>
-            <input type="number" class="form-control shadow-none">
+            <input type="number" name="st_id" class="form-control shadow-none" required>
             </div>
             <div class="col-md-6 ps-auto mb-3">
             <label class="form-label">picture</label>
-            <input type="file" class="form-control-file shadow-none">
+            <input type="file" name="profile" accept=".jpg, .jpeg, .png .webp " class="form-control-file shadow-none">
             </div>
             <div class="col-md-12 p-0 mb-3">
               <label class="form-label">Address</label>
-                <textarea class="form-control shadow-none" rows="1"></textarea>
+                <textarea class="form-control shadow-none" name="address" rows="1" required></textarea>
               </div>
               <div class="col-md-6 ps-auto mb-3">
             <label class="form-label">date of birth</label>
-            <input type="date" class="form-control shadow-none">
+            <input type="date" class="form-control shadow-none" name="dob" required>
             </div>
             <div class="col-md-6 ps-auto mb-3">
             <label class="form-label">Password</label>
-            <input type="password" class="form-control shadow-none">
+            <input type="password" class="form-control shadow-none" name="pass" required>
             </div>
             <div class="col-md-6 ps-auto mb-3">
             <label class="form-label">confirm password</label>
-            <input type="password" class="form-control shadow-none">
+            <input type="password" class="form-control shadow-none" name="cpass" required>
             </div>
           </div>
         </div>
@@ -130,6 +131,7 @@
         </div>
         </div>
         </form>
+        
       </div>
     </div>
 </div>
