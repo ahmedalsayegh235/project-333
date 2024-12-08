@@ -1,7 +1,56 @@
  <?php require('admin/inc/db_config.php');
- require('admin/inc/essentials.php');
- 
- ?>
+ require('inc/essentials.php');
+
+session_start();
+
+$error_message = ""; // Initialize error message variable
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+    try {
+        // Retrieve and sanitize inputs
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+
+        // Check if both fields are filled
+        if (empty($email) || empty($password)) {
+            $error_message = "Please fill in both email and password.";
+        } else {
+            // Prepare the SQL query
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email AND status = 1 LIMIT 1");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+
+            // Fetch the user data
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+                // Verify the password
+                if (password_verify($password, $user['password'])) {
+                    // Set session variables
+                    $_SESSION['userlogin'] = true;
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['name'] = $user['name'];
+                    $_SESSION['email'] = $user['email'];
+                    $_SESSION['phone'] = $user['phone'];
+                    $_SESSION['student_id'] = $user['student_id'];
+                    $_SESSION['profile_picture'] = $user['profile_picture'];
+
+                    // Redirect to the dashboard
+                    redirect("dashboard.php");
+                    exit;
+                } else {
+                    $error_message = "Invalid password. Please try again.";
+                }
+            } else {
+                $error_message = "User not found. Please check your email.";
+            }
+        }
+    } catch (PDOException $e) {
+        $error_message = "An error occurred: " . $e->getMessage();
+    }
+}
+?>
+
  
  <!-- navbar -->
  <nav class="navbar navbar-expand-lg navbar-light px-lg-3 py-lg-2 shadow sticky-top">
@@ -13,7 +62,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link active me-2" href="index.php">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link active me-2" href="dashboard.php">Home <span class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item">
@@ -28,6 +77,15 @@
         </li>
       </ul>
       <div class="d-flex">
+    
+      <?php if (!empty($error_message)): ?>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Warning!</strong> <?= $error_message; ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
+
       <button type="button" class="btn btn-outline-light shadow-none custom-spacing" data-toggle="modal" data-target="#loginModal">
     Login
 </button>
@@ -38,36 +96,37 @@
     </div>
   </nav>
 <!--Login-->
-  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <form>
-        <div class="modal-header">
-          <h5 class="modal-title">
-          <i class="bi bi-person-circle fs-3 me-2"></i> User Login
-          </h5>
-          <button type="reset" class="close shadow-none" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <form method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-person-circle fs-3 me-2"></i> User Login
+                    </h5>
+                    <button type="reset" class="close shadow-none" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-control shadow-none" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control shadow-none" required>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button name="login" type="submit" class="btn btn-dark shadow-none">LOGIN</button>
+                        <a href="javascript:void(0)" class="text-secondary text-decoration-none">Forgot your password?</a>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="modal-body">
-        <div class="mb-3">
-          <label class="form-label">Email address</label>
-          <input type="email" class="form-control shadow-none">
-       </div>  
-       <div class="mb-3">
-          <label class="form-label">Password</label>
-          <input type="password" class="form-control shadow-none">
-       </div> 
-       <div class="d-flex align-items-center justify-content-between mb-2">
-        <button type="submit" class="btn btn-dark shadow-none">LOGIN</button>
-        <a href="javascript: void(0)" class="text-secondary text-decoration-none">forgot your password?</a>
-       </div>
-        </div>
-        </form>
-      </div>
     </div>
 </div>
+
 <!-- signup-->
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

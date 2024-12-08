@@ -7,7 +7,7 @@
   <?php require('inc/links.php'); ?>
 </head>
 <body>
- <?php require('inc/header.php');  ?>
+<?php require('inc/header-user.php');  ?>
   <div class="my-5 px-4">
     <h2 class="fw-bold h-font text-center">UOB Contact</h2>
     <div class="h-line bg-dark"></div>
@@ -81,8 +81,8 @@ if (isset($_POST['send'])) {
   $values = [$frm_data['name'], $frm_data['email'], $frm_data['subject'], $frm_data['message']];
 
   try {
-      $stmt = $pdo->prepare($query); 
-      $res = $stmt->execute($values); 
+      $stmt = $pdo->prepare($query); // Use the PDO instance to prepare the query
+      $res = $stmt->execute($values); // Execute with bound values
 
       if ($res) {
           _alert('success', 'Mail sent successfully!');

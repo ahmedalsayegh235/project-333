@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roomy - Home</title>
+  <title>Roomy - Dashboard</title>
   <?php require('inc/links.php'); ?>
 <link
   rel="stylesheet"
@@ -13,7 +13,7 @@
 
 </head>
 <body>
- <?php require('inc/header.php');  ?>
+<?php require('inc/header-user.php');  ?>
 <!-- carousel -->
 <div class="container-fluid mt-2">
 <div class="swiper mySwiper">
@@ -40,8 +40,7 @@
         <div class="col-lg-3 mb-3">
         </div>
         <div class="col-lg-1 mb-lg-3 mt-2 ml-5">
-        <a href="booking.php"  class="btn text-white shadow-none custom-bg" data-toggle='modal' data-target='#loginModal'>Check</a>
-       
+          <a href="booking.php"  class="btn text-white shadow-none custom-bg">Check</a>
         </div>
       </div>
     </form>
@@ -93,9 +92,7 @@ try {
                             <i class='bi bi-star-fill text-warning'></i>
                         </div>
                         <div class='d-flex'>
-                            <button type='button' class='btn btn-sm text-white custom-bg shadow-none' data-toggle='modal' data-target='#loginModal'>
-                            Book now
-                            </button>
+                            <a href='booking.php' class='btn btn-sm text-white custom-bg shadow-none'>Book Now!</a>
                             <a href='#' class='btn btn-sm btn-outline-dark shadow-none ml-2'>More Info</a>
                         </div>
                     </div>
@@ -109,6 +106,8 @@ try {
     echo "<p class='text-center text-danger'>Failed to load rooms. Please try again later.</p>";
 }
 ?>
+
+
     <div class="col-lg-12 text-center mt-5">
     <a href="#" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms</a>
     </div>

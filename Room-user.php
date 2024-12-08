@@ -7,7 +7,7 @@
   <?php require('inc/links.php'); ?>
 </head>
 <body>
- <?php require('inc/header.php');  ?>
+ <?php require('inc/header-user.php');  ?>
   <div class="my-5 px-4">
     <h2 class="fw-bold h-font text-center">UOB Rooms</h2>
     <div class="h-line bg-dark"></div>
@@ -69,9 +69,9 @@ try {
                   </div>
                   <div class='col-md-2 text-center'>
                       <h6 class='mb-4'>Per 1 Hour</h6>
-                      <button type='button' class='btn btn-sm text-white custom-bg shadow-none mb-1' data-toggle='modal' data-target='#loginModal'>
+                      <a href='booking.php' type='button' class='btn btn-sm text-white custom-bg shadow-none mb-1'>
                             Book now
-                            </button>
+                            </a>
                       <a href='#' class='btn btn-sm btn-outline-dark shadow-none '>More Info</a>
                   </div>
               </div>

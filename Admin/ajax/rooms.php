@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $action = $_POST['action'];
 
         if ($action === 'fetch') {
-            // Fetch all rooms
+            // get all the rooms
             $stmt = $pdo->query("SELECT * FROM rooms");
             $output = "";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['status' => $res ? 'success' : 'failed']);
 
         } elseif ($action === 'edit-fetch') {
-            // Fetch a room's data for editing
+            // get the room's data for editing
             $id = $_POST['id'];
 
             $stmt = $pdo->prepare("SELECT * FROM rooms WHERE id = ?");

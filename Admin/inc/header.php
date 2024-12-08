@@ -10,15 +10,21 @@
         <li class="nav-item active">
           <a class="nav-link active me-2" href="dashboard.php">dashboard<span class="sr-only">(current)</span></a>
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link me-2" href="users.php">users</a>
+    </li>
         <li class="nav-item">
           <a class="nav-link me-2" href="user_queries.php">user queries</a>
         </li>
         <li class="nav-item">
           <a class="nav-link me-2" href="rooms.php">Rooms</a>
         </li><li class="nav-item">
+          <a class="nav-link me-2" href="bookings.php">bookings</a>
+          </li>
+        <li class="nav-item">
           <a class="nav-link me-2" href="settings.php">settings</a>
-    
+          </li>
+       
       </ul>
       <div class="d-flex">
       <a href="logout.php" class="btn btn-light btn-sm">LOG OUT</a>

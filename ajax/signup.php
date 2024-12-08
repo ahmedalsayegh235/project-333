@@ -20,16 +20,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['status' => 'error', 'message' => 'Passwords do not match']);
             exit;
         }
+        $pattern = "/^[a-zA-Z0-9._%+-]+@stu\.uob\.edu\.bh$/"; 
+        if(!preg_match($pattern,$email))
+        {
+            echo json_encode(['status' => 'error', 'message' => 'wrong email format please use the UOB email']);
+            exit;
+        }
 
         // Hash the password
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-        // Validate and upload profile picture
+        // input file not being able to store 
+        // TODO: fix this bug
         if (isset($profile) && $profile['error'] === UPLOAD_ERR_OK) {
-            $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
-            $allowed_mime_types = ['image/jpeg', 'image/png', 'image/webp'];
+            $allowed_extensions = ['.jpg', '.jpeg', '.png', '.webp'];
+            $allowed_mime_types = ['images/jpeg', 'images/png', 'images/webp'];
         
-            // Get file extension and MIME type
+            // Get file extension
             $file_extension = strtolower(pathinfo($profile['name'], PATHINFO_EXTENSION));
             $file_mime_type = mime_content_type($profile['tmp_name']);
         
@@ -41,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             // Generate unique file name and move file to uploads
             $profile_path = '../uploads/' . uniqid() . '.' . $file_extension;
+            // check if the file didnt move to upload 
             if (!move_uploaded_file($profile['tmp_name'], $profile_path)) {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to upload profile picture']);
                 exit;
