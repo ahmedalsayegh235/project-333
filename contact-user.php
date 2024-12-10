@@ -99,11 +99,6 @@ if (isset($_POST['send'])) {
   </div>
 </div>
 </div>
-
-
-
-
-
 <!-- footer -->
 <?php require('inc/footer.php');?>
 

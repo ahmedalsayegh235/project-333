@@ -1,4 +1,4 @@
-<!-- footer --> 
+
 <div class="container-fluid mt-5" style="background-color:#5585b5; padding:auto; bottom:0;">
   <div class="row">
     <div class="col-lg-4">
